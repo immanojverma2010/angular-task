@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {AboutComponent} from "./about/components/about.component";
+
 @Component({
     selector: "app",
     templateUrl: "./app/app.html"

@@ -14,22 +14,23 @@ export class TaskListComponent implements OnInit {
 
     todoCount:number;
     selectedTask:Task;
-    tasks:Array<Task>;
+    tasks:Task[];
+
 
     constructor(private _taskService:TaskService) {
-        this.tasks = _taskService.getTasks();
-        this.calculateTodoCount();
-    }
+        console.log("starting TaskListComponent");
+        this._taskService.getTasks()
+          .subscribe(tasks => {
+              this.tasks = tasks;
+            });
+
+            console.log(this.tasks);
+            console.log("1st");
+            }
 
     ngOnInit() {
-        console.log("Todo component initialized with " + this.tasks.length + " tasks.");
+      console.log("2nd Todo component initialized ");
     }
 
-    calculateTodoCount() {
-        this.todoCount = this.tasks.filter(t => !t.done).length;
-    }
 
-    select(task:Task) {
-        this.selectedTask = task;
-    }
 }
