@@ -7,6 +7,7 @@ import {TaskListComponent} from "./todo/components/task-list.component";
 /*import {TaskComponent} from "./todo/components/task.component";*/
 import {AboutComponent} from "./about/components/about.component";
 import {HomeComponent} from "./home/components/home.component";
+import {TaskComponent} from "./todo/components/task.component";
 
 import {routing, appRoutingProviders} from './app.routing';
 import {FormsModule} from "@angular/forms";
@@ -22,6 +23,7 @@ import {FormsModule} from "@angular/forms";
         AppComponent,
         AboutComponent,
         HomeComponent,
+        TaskComponent,
         TaskListComponent
     ],
     providers:[

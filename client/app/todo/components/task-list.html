@@ -1,12 +1,15 @@
-<h1>Tasks </h1>
+<h1>Todo tasks ({{todoCount}})</h1>
+
   <ul>
       <li *ngFor="let task of tasks">
-          <a href="javascript:void(0)" >
+          <a href="javascript:void(0)" (click)=select(task) >
               {{task.name}} {{task.done}}
               <span>
-                  <span [hidden]="task.done">[Done]</span>
-                  <span [hidden]="task.done">[Todo]</span>
+                  <span [hidden]="task.done=='false'">[Done]</span>
+                  <span [hidden]="task.done=='true'">[Todo]</span>
               </span>
           </a>
       </li>
   </ul>
+
+<task *ngIf="selectedTask" [task]="selectedTask" (statusChanged)="calculateTodoCount()"></task>

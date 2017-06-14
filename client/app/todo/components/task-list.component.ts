@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {Task} from "../models/task";
-import {OnInit} from "@angular/core";
+import {OnInit, AfterContentInit, AfterContentChecked} from "@angular/core";
 import {TaskService} from "../services/task-service";
 
 
@@ -14,7 +14,7 @@ export class TaskListComponent implements OnInit {
 
     todoCount:number;
     selectedTask:Task;
-    tasks:Task[];
+    tasks:Array<Task>; //task[]
 
 
     constructor(private _taskService:TaskService) {
@@ -23,12 +23,23 @@ export class TaskListComponent implements OnInit {
           .subscribe(tasks => {
               console.log(tasks);
               this.tasks = tasks;
-
+                  this.findInfo();
             });
           }
 
+
     ngOnInit() {
-      console.log("2nd Todo component initialized ");
+
+  }
+
+  findInfo() {
+    console.log("Todo component initialized with " + this.tasks.length + " tasks.");
+    this.todoCount = this.tasks.filter(t => t.done === "false").length;
+  }
+
+
+    select(task:Task) {
+      this.selectedTask = task;
     }
 
 
