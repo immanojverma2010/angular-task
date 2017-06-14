@@ -1,1 +1,12 @@
-<h1>Tasks are displayed in console <h1>
+<h1>Tasks </h1>
+  <ul>
+      <li *ngFor="let task of tasks">
+          <a href="javascript:void(0)" >
+              {{task.name}} {{task.done}}
+              <span>
+                  <span [hidden]="task.done">[Done]</span>
+                  <span [hidden]="task.done">[Todo]</span>
+              </span>
+          </a>
+      </li>
+  </ul>

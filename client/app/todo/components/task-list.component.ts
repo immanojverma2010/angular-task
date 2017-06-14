@@ -21,12 +21,11 @@ export class TaskListComponent implements OnInit {
         console.log("starting TaskListComponent");
         this._taskService.getTasks()
           .subscribe(tasks => {
+              console.log(tasks);
               this.tasks = tasks;
-            });
 
-            console.log(this.tasks);
-            console.log("1st");
-            }
+            });
+          }
 
     ngOnInit() {
       console.log("2nd Todo component initialized ");
