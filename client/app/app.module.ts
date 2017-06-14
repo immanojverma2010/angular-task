@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {AppComponent} from "./app.component";
 import {TaskListComponent} from "./todo/components/task-list.component";
-/*import {TaskComponent} from "./todo/components/task.component";*/
+
 import {AboutComponent} from "./about/components/about.component";
 import {HomeComponent} from "./home/components/home.component";
 import {TaskComponent} from "./todo/components/task.component";

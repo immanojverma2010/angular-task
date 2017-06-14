@@ -7,13 +7,9 @@ router.get('/', function(req, res, next) {
   res.send('Get is responding--no data attatched');
 });
 
-
-
-
-
 router.route("/viewTasks")
 .get(function (req,res) {
-  TaskModel.find({},function(err,tasks){
+  TaskModel.find({},{'name':1,'done':1,'_id':0},function(err,tasks){
     if(err)
     {
       res.send(err);
@@ -25,6 +21,7 @@ router.route("/viewTasks")
   })
 
 });
+
 
 
 router.route("/addTask")
