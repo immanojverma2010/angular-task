@@ -2,19 +2,40 @@ import {Component} from "@angular/core";
 import {Input} from "@angular/core";
 
 import {Task} from "../models/task";
+import {TaskService} from "../services/task-service";
+
 import {Output} from "@angular/core";
 import {EventEmitter} from "@angular/core";
 
 @Component({
     selector: 'task',
-    templateUrl: './app/todo/components/task.html'
+    templateUrl: './app/todo/components/task.html',
+    styleUrls: ['./app/todo/components/task.css'],
 })
 export class TaskComponent {
     @Input() task:Task;
     @Output() statusChanged:any = new EventEmitter<any>();
+    taskName:Task;
 
-    toggleDone() {
-      console.log("after html  before task toggle");
+    constructor(private _taskService:TaskService) {
+
+    }
+
+    toggleDone(value :any) {
+      console.log(this.task.done);
+      console.log("current value");
+      value === 'on' ? value = 'true' : value = 'false';
+      console.log(value);
+      console.log("changing value");
+      //call to service to make an update in db
+        this.task.done = value ;
+        console.log("value changed...new value is: " + this.task.done);
+      this._taskService.updateTask(this.task)
+        .subscribe(task => {
+            console.log("returned after update in toggleDone");
+            console.log(task);
+            this.taskName = task ;
+        });
 
         this.task.toggleDone(); // This would work if Task type values are saved in Task[]
         //<see task.forEach under constructor of task-list.component>

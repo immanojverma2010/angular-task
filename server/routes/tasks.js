@@ -44,6 +44,7 @@ router.route("/taskUpdate")
 .put(function(req, res){
   console.log("put req called " +req.body.taskName+"    "+req.body.taskStatus);
   if(req.body){
+      var taskObj= {name:req.body.taskName, done: req.body.taskStatus};
 
     TaskModel.update({ name: req.body.taskName }, { done: req.body.taskStatus },function(err){
       if(err)
@@ -51,8 +52,9 @@ router.route("/taskUpdate")
         res.send(err);
       }
       else {
-        console.log("Updated the news")
-        res.send("Updated news");
+        console.log("server part--Updated the news")
+        console.log(taskObj);
+        res.send(taskObj);
       }
     })
   }
@@ -64,6 +66,7 @@ router.route("/taskUpdate")
 router.route("/addTask")
 .post(function (req,res) {
   if(req.body){
+    var taskObj= {name:req.body.name, done: req.body.done};
     console.log(req.body);
     var task =new TaskModel(req.body);
   task.save(function(err){
@@ -73,7 +76,7 @@ router.route("/addTask")
     }
     else{
       console.log("Tasks Inserted");
-      res.send("Tasks Inserted");
+      res.send(taskObj);
     }
   });
 }

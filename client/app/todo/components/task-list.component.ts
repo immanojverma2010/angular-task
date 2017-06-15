@@ -15,21 +15,14 @@ export class TaskListComponent implements OnInit {
 
     todoCount:number;
     selectedTask:Task;
-
-    tasks:Array<Task>= []; //task[]
+      task = new Task();
+      addedTask:Task;
+    tasks:Array<Task>; //task[]
 
 
     constructor(private _taskService:TaskService) {
         console.log("starting TaskListComponent");
-        this._taskService.getTasks()
-          .subscribe(tasks => {
-                tasks.forEach(t => {
-              let taskObj:Task = new Task(t.name, t.done);
-              this.tasks.push(taskObj);
-            });
-              console.log(tasks);
-              this.findInfo();
-            });
+            this.getAllTasks();
           }
 
 
@@ -37,13 +30,42 @@ export class TaskListComponent implements OnInit {
       console.log("Todo component initialized");
   }
 
+
+
+  getAllTasks() {
+    this._taskService.getTasks()
+      .subscribe(tasks => {
+            this.tasks = [];
+            tasks.forEach(t => {
+          let taskObj:Task = new Task(t.name, t.done);
+          this.tasks.push(taskObj);
+        });
+          console.log(tasks);
+          this.findInfo();
+        });
+  }
+
   findInfo() {
     console.log("Total tasks" + this.tasks.length);
-    this.calculateTodoCount();
-  }
-  calculateTodoCount() {
     this.todoCount = this.tasks.filter(t => t.done === "false").length;
   }
+  addTask(value :any) {
+    console.log(value);
+    this.task.name = value;
+    this.task.done = "false";
+    console.log(this.task);
+    this._taskService.addTask(this.task)
+      .subscribe(task => {
+        this.getAllTasks();
+        this.reset();
+        this.addedTask = task ;
+      });
+  }
+
+private reset() {
+    this.task.name = null;
+    this.task.done = null;
+}
 
 
     select(task:Task) {
