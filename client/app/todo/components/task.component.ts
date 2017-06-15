@@ -22,18 +22,14 @@ export class TaskComponent {
     }
 
     toggleDone(value :any) {
-      console.log(this.task.done);
-      console.log("current value");
       value === 'on' ? value = 'true' : value = 'false';
-      console.log(value);
-      console.log("changing value");
+
       //call to service to make an update in db
         this.task.done = value ;
-        console.log("value changed...new value is: " + this.task.done);
+
       this._taskService.updateTask(this.task)
         .subscribe(task => {
-            console.log("returned after update in toggleDone");
-            console.log(task);
+
             this.taskName = task ;
         });
 

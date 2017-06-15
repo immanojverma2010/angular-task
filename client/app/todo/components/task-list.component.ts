@@ -15,9 +15,11 @@ export class TaskListComponent implements OnInit {
 
     todoCount:number;
     selectedTask:Task;
-      task = new Task();
-      addedTask:Task;
+    addedTask:Task;
+    deletedTask:Task;
+    task = new Task();
     tasks:Array<Task>; //task[]
+    msgStatus=true;
 
 
     constructor(private _taskService:TaskService) {
@@ -30,7 +32,16 @@ export class TaskListComponent implements OnInit {
       console.log("Todo component initialized");
   }
 
+delete(task :Task) {
+this.deletedTask = task;
+  this._taskService.deleteTask(task.name)
+      .subscribe(result => {
+         console.log(result);
 
+         //console.log(this.deletedTask);
+         this.getAllTasks();
+      });
+}
 
   getAllTasks() {
     this._taskService.getTasks()
@@ -40,25 +51,26 @@ export class TaskListComponent implements OnInit {
           let taskObj:Task = new Task(t.name, t.done);
           this.tasks.push(taskObj);
         });
-          console.log(tasks);
+        //  console.log(tasks);
           this.findInfo();
         });
   }
 
   findInfo() {
-    console.log("Total tasks" + this.tasks.length);
+    //console.log("Total tasks" + this.tasks.length);
     this.todoCount = this.tasks.filter(t => t.done === "false").length;
   }
   addTask(value :any) {
-    console.log(value);
+    //console.log(value);
     this.task.name = value;
     this.task.done = "false";
-    console.log(this.task);
+    //console.log(this.task);
     this._taskService.addTask(this.task)
       .subscribe(task => {
         this.getAllTasks();
         this.reset();
         this.addedTask = task ;
+        
       });
   }
 
@@ -67,12 +79,14 @@ private reset() {
     this.task.done = null;
 }
 
+bubbleMessage() {
+  thi.msgStatus=!this.msgStatus;
+}
 
-    select(task:Task) {
-      console.log(task);
-      this.selectedTask = task;
-      console.log(this.selectedTask);
-    }
+          select(task:Task) {
+      //console.log(task);
+      this.deletedTask.name === task.name ? console.log("delete task comparing") : this.selectedTask = task;
+        }
 
 
 }

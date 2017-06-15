@@ -22,10 +22,13 @@ router.route("/viewTasks")
 
 });
 
-router.route("/deleteTask")
-.delete(function (req,res) {
-    var name=req.body.name;
 
+//router.route("/deleteTask")
+router.route("/deleteTask/:taskname")
+.delete(function (req,res) {
+    //var name=req.body.name;
+      var name=req.params.taskname;
+      console.log(name);
       TaskModel.remove({'name':name},function(err){
         if(err)
         {
@@ -33,7 +36,7 @@ router.route("/deleteTask")
         }
         else{
           console.log("Task Deleted from mongo");
-          res.send("Task Deleted from mongo");
+          res.send({data:"Task Deleted from mongo"});
         }
       })
 });

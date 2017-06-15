@@ -30,12 +30,19 @@ export class TaskService {
         updateTask(task :Task) {
           let headers = new Headers({ 'Content-Type': 'application/json' });
           let options = new RequestOptions({ headers: headers });
-            console.log("Service part- calling put method");
-            console.log(task);
+            //console.log("Service part- calling put method");
+            //console.log(task);
           let url = '/tasks/taskUpdate';
               var bodyObj = { taskName: task.name, taskStatus: task.done };
             return this.http.put(url, bodyObj, options )
                 .map((res:Response) => res.json());
         }
+
+        deleteTask(name :string) {
+          //console.log(name);
+
+    return this.http.delete('/tasks/deleteTask/' + name)
+                    .map((res:Response) => res.json());
+  }
 
 }
