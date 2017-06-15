@@ -15,7 +15,7 @@
 
 
 
-  <task *ngIf="selectedTask" [task]="selectedTask" (statusChanged)="getAllTasks()"></task>
+  <task *ngIf="selectedTask" [task]="selectedTask" (statusChanged)="refreshInfo(selectedTask)"></task>
     </div>
 <input type="text" #newTask (keyup.enter)="addTask(newTask.value)" [(ngModel)]="task.name" placeholder="Add a new task">
-<div *ngIf="addedTask" [ngClass] = "'success'"> Task  <b>{{addedTask.name}}</b> added. </div>
+<div *ngIf="msgStatus" [ngClass] = "'success'"> {{msg}} </div>

@@ -19,10 +19,12 @@ export class TaskListComponent implements OnInit {
     deletedTask:Task;
     task = new Task();
     tasks:Array<Task>; //task[]
-    msgStatus=true;
+    msgStatus:boolean = false;
+    msg:string = "";
 
 
     constructor(private _taskService:TaskService) {
+
         console.log("starting TaskListComponent");
             this.getAllTasks();
           }
@@ -34,10 +36,9 @@ export class TaskListComponent implements OnInit {
 
 delete(task :Task) {
 this.deletedTask = task;
+console.log(this.deletedTask);
   this._taskService.deleteTask(task.name)
       .subscribe(result => {
-         console.log(result);
-
          //console.log(this.deletedTask);
          this.getAllTasks();
       });
@@ -50,7 +51,9 @@ this.deletedTask = task;
             tasks.forEach(t => {
           let taskObj:Task = new Task(t.name, t.done);
           this.tasks.push(taskObj);
-        });
+          this.selectedTask = null;
+
+            });
         //  console.log(tasks);
           this.findInfo();
         });
@@ -60,8 +63,9 @@ this.deletedTask = task;
     //console.log("Total tasks" + this.tasks.length);
     this.todoCount = this.tasks.filter(t => t.done === "false").length;
   }
-  addTask(value :any) {
+  addTask(value :string) {
     //console.log(value);
+      value = value.trim();
     this.task.name = value;
     this.task.done = "false";
     //console.log(this.task);
@@ -70,7 +74,10 @@ this.deletedTask = task;
         this.getAllTasks();
         this.reset();
         this.addedTask = task ;
-        
+        this.msgStatus = true ;
+        let msg:string = `task named: ${value} Added`;
+        this.bubbleMessage(msg);
+
       });
   }
 
@@ -79,14 +86,30 @@ private reset() {
     this.task.done = null;
 }
 
-bubbleMessage() {
-  thi.msgStatus=!this.msgStatus;
+bubbleMessage(msg :string) {
+  this.msg = msg;
+  self = this;
+  setTimeout(function (){
+  self.msgStatus = false;
+  }, 1500);
 }
 
-          select(task:Task) {
-      //console.log(task);
-      this.deletedTask.name === task.name ? console.log("delete task comparing") : this.selectedTask = task;
+refreshInfo(task :Task) {
+  this.getAllTasks();
+  let msg = `Task named: ${task.name} ${task.done === 'true' ? 'done' : 'todo' }`;
+    this.msgStatus = true;
+  this.bubbleMessage(msg);
+}
+
+
+  select(task:Task) {
+      console.log(task);
+      if ( this.deletedTask ) {
+        console.log(this.deletedTask.name);
+        this.deletedTask.name === task.name ? console.log("delete task comparing") : this.selectedTask = task;
+      } else {
+          this.selectedTask = task;
         }
 
-
+      }
 }

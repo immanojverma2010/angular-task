@@ -21,19 +21,8 @@ export class TaskComponent {
 
     }
 
-    toggleDone(value :any) {
-      value === 'on' ? value = 'true' : value = 'false';
-
-      //call to service to make an update in db
-        this.task.done = value ;
-
-      this._taskService.updateTask(this.task)
-        .subscribe(task => {
-
-            this.taskName = task ;
-        });
-
-        this.task.toggleDone(); // This would work if Task type values are saved in Task[]
+    toggleDone() {
+      this.task.toggleDone(); // This would work if Task type values are saved in Task[]
         //<see task.forEach under constructor of task-list.component>
 
         /*
@@ -42,6 +31,11 @@ export class TaskComponent {
         that time you can create the same functionality here by this line
         this.task.done = this.task.done === "false" ? "true" : "false";
         */
+       this._taskService.updateTask(this.task)
+            .subscribe(task => {
+                this.taskName = task ;
+            });
+
         this.statusChanged.emit(null);
     }
 }

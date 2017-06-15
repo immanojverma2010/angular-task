@@ -9,7 +9,7 @@
     "build": "gulp build",
     "start-server":"node ./server/bin/www",
     "start": "concurrent --kill-others \"gulp watch\" \"npm run start-server\"",
-    "preinstall":"npm i ./server",
+    
     "postinstall": "typings install"
   },
 

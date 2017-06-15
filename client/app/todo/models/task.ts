@@ -4,7 +4,7 @@ export class Task {
     }
     toggleDone(): void{
       console.log("last toggle method");
-        this.done = this.done === "false" ? "true" : "false";
+    this.done = this.done === "false" ?  "true" : "false";
         console.log(this.done);
     }
 
